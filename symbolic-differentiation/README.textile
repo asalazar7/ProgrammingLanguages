@@ -1,0 +1,35 @@
+h1. Symbolic Differentiation Calculator
+
+p. Given a supported function expression, see supported functions below, calculate the derivative function. The calculator is bundled with two "data-representations" which inform the runtime if the user expects expressions to be represented in the infix or prefix notation. See the *fix-test.lisp for example of how to run a calculation.
+
+h3. Usage
+
+p. Load a data representation (infix or prefix) then use the pretty-diff function to differentiate a function expression with respect to some variable and print the result. See infix-tests.lisp or prefix-tests.lisp for examples.
+
+h3. The problem
+
+p. Given an expression, determine the derivative function with respect to some variable of the expression. The calculator must support the transition rules represented by the following (E)BNF
+
+| Symbol Class | | Transitions |
+|&lt;number&gt;| =>|Any integer or real number|
+|&lt;constant&gt;| =>|&lt;number&gt; &#124;&#124; A &#124; B &#124; C &#124; D &#124; E &#124; F &#124; G &#124; H &#124; M &#124; N|
+|&lt;variable&gt;| =>|U &#124; V &#124; W &#124; X &#124; Y &#124; Z|
+|&lt;negation&gt;| =>|- &lt;function&gt;|
+|&lt;sum&gt;| =>| (+ &lt;function&gt; &lt;function&gt;)|
+|&lt;difference&gt;| =>| (- &lt;function&gt; &lt;function&gt;)|
+|&lt;product&gt;| =>| (* &lt;function&gt; &lt;function&gt;)|
+|&lt;quotient&gt;| =>| (/ &lt;function&gt; &lt;function&gt;)|
+|&lt;power&gt;| =>| (** &lt;variable&gt; &lt;constant&gt;)|
+|&lt;function&gt;| =>|&lt;constant&gt; &#124; &lt;variable&gt; &#124; &lt;negation&gt; &#124; &lt;sum&gt; &#124; &lt;difference&gt; &#124; &lt;product&gt; &#124; &lt;quotient&gt; &#124; &lt;power&gt;|
+
+p. The calculator must also support the differentiation of each &lt;function&gt;:
+
+| Function | Derivative Rule |
+| Constant | The derivative of a constant value is always 0. |
+| Variable | The derivative of x is 1 iff the variable with respect to which the expression is being derived is also x, otherwise the derivative of x is 0. |
+| Negation | The derivative of the negation of x is equal to the negation of the derivative of x |
+| Addition | The derivative of the sum of x and y is equal to the sum of the derivative of x and the derivative of y. |
+| Subtraction | The derivative of the difference of x and y is equal to the difference between the derivative of x and the derivative of y. |
+| Multiplication | The derivative of the product of x and y is equal to the sum of the product of y and the derivative of x and the product of x and the derivative of y. |
+| Division | The derivative of the quotient of x by y is equal to the quotient of the difference of the product of  y and the derivative of x and the product of x and the derivative of y and y raised to the second power. |
+| Exponentiation | The derivative of x raised to the power of y is equal to the product of the product of the product of y and x raised to the y - 1 and the derivative of y. |
